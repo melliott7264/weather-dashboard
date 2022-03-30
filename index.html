@@ -10,12 +10,71 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    <header>
-        <h1>Weather Dashboard</h1>
-
+    <header class="hero">
+        <h1 class="app-title text-center">Weather Dashboard</h1>
     </header>
-    <main>
-
+    <main class="row flex-row justify-space-between">
+        <div class="col-12 col-md-3">
+            <div class="card">
+                <h3 class="card-header text-center">Search for a City</h3>
+                <form id="city-search" class ="card-body ">
+                    <input name="city-input" id="city-input" type="text" autofocus="true" class="form-input" value="Search City"/>
+                    <button type="submit" class="btn text-center d-block">Submit</button>
+                </form>
+                <button type="text" class="btn text-center d-block" data-city="city1">City1</button>
+            </div>
+            
+        </div>
+        <div class="col-12 col-md-9">
+            <div class="card current-weather">
+                <h3 class="card-header text-center city-info" >City (03/30/2022)</h3>
+                <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
+                <p class="current-weather-data" id="current-temp">Current Temp</p>
+                <p class="current-weather-data" id="current-wind">Current Wind</p>
+                <p class="current-weather-data" id="current-humitiy">Current Humidity</p>
+                <p class="current-weather-data" id="current-uvi">Current UVI</p>
+            </div>
+            <div class="row card five-day-forecast">
+                <h3 class="card-header text-center col-12 col-md-9">5 Day Forecast</h3>
+                <div class="row flex-row justify-space-between">
+                    <div class="card forecast-card col-12 col-md-2">
+                        <h4 class="card-header text-center">Date</h4>
+                        <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
+                        <p class="forecast-weather-data" id="forecast-temp-1">Current Temp</p>
+                        <p class="forecast-weather-data" id="forecast-wind-1">Current Wind</p>
+                        <p class="forecast-weather-data" id="forecast-humitiy-1">Current Humidity</p> 
+                    </div>
+                    <div class="card forecast-card col-12 col-md-2">
+                        <h4 class="card-header text-center">Date</h4>
+                        <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
+                        <p class="forecast-weather-data" id="forcast-temp-2">Current Temp</p>
+                        <p class="forecast-weather-data" id="forecast-wind-2">Current Wind</p>
+                        <p class="forecast-weather-data" id="forecast-humitiy-2">Current Humidity</p>
+                    </div>
+                    <div class="card forecast-card col-12 col-md-2">
+                        <h4 class="card-header text-center">Date</h4>
+                        <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
+                        <p class="forecast-weather-data" id="forecast-temp-3">Current Temp</p>
+                        <p class="forecast-weather-data" id="forecast-wind-3">Current Wind</p>
+                        <p class="forecast-weather-data" id="forecast-humitiy-3">Current Humidity</p>
+                    </div>
+                    <div class="card forecast-card col-12 col-md-2">
+                        <h4 class="card-header text-center">Date</h4>
+                        <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
+                        <p class="forecast-weather-data" id="forecast-temp-4">Current Temp</p>
+                        <p class="forecast-weather-data" id="forecast-wind-4">Current Wind</p>
+                        <p class="forecast-weather-data" id="forecast-humitiy-4">Current Humidity</p>
+                    </div>
+                    <div class="card forecast-card col-12 col-md-2">
+                        <h4 class="card-header text-center">Date</h4>
+                        <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
+                        <p class="forecast-weather-data" id="forecast-temp-5">Current Temp</p>
+                        <p class="forecast-weather-data" id="forecast-wind-5">Current Wind</p>
+                        <p class="forecast-weather-data" id="forecast-humitiy-5">Current Humidity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>  
     <footer>
 
