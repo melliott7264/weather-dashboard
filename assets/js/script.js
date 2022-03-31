@@ -204,7 +204,7 @@ var loadCityData = function () {
     }
 }
 
-$("#submit-btn").on("click", function (){
+$("#submit-btn").on("submit", function (){
     console.log("clicked submit button");
     fetchLocationData($("#city-input").val().trim());
 })
