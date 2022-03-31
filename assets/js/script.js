@@ -28,19 +28,25 @@ var fetchLocationData = function(location) {
     if (!location) {
         var searchArray = [];
         var locationObj = {};
+
+        // Search the saved city data for the last city added and use that for the search
         if (loadCityData()){
             searchArray = loadCityData();
             var lastSearchIndex = searchArray.length-1;
             location = searchArray[lastSearchIndex].loc;
-        }    
+        } else {
+            // if there is no saved city data, default to my hometown
+            location = "Mechanicsville,VA";
+        }  
+
     }
 
-    console.log(location);
+    console.log("Passed location " + location);
 
     var apiKey =  "f3daf114f7ab984d1e977c7fa53afcf7";
     var locationUrl = "http://api.positionstack.com/v1/forward?access_key=" + apiKey + "&query=" + location + "&output=json";
 
-    console.log(locationUrl);
+    console.log("location URL " + locationUrl);
 
     fetch(locationUrl).then(function(response){
         // request was successful
@@ -49,7 +55,8 @@ var fetchLocationData = function(location) {
             console.log(data);
             var lat =data.data[0].latitude;
             var lon =data.data[0].longitude;
-            var loc = data.data[0].name;
+            // var loc = data.data[0].name;
+            var loc = location;
 
             // save city location data
             saveCityData(lat, lon, loc);
@@ -74,6 +81,9 @@ var displayWeatherData = function (loc, data) {
 var currentWeatherEl = $(".current-weather");
 
 // Start Clear Page
+if ($(".search-btns")) {
+    $(".search-btns").remove();
+}
 if ($(".current-weather-card")) {
     $(".current-weather-card").remove();
 }
@@ -84,6 +94,9 @@ if ($(".forecast-weather")) {
     $(".forecast-weather").remove();
 }
 // End Clear Page
+
+// Build Search Buttons
+addSearchButtons();
 
 // Build Current Weather Card
 var currentWeatherCardEl = $("<div>").addClass("card current-weather-card");
@@ -122,13 +135,20 @@ currentWeatherEl.append(forecastWeatherHeaderEl, forecastWeatherCardEl);
 };
 
 var addSearchButtons = function () {
-
     // add city search button
-    var searchCardEl = $("div.card");
+    var buttonContainerEl = $(".button-container");
+    
 
-    var searchCityButtonEl = $("<button>").addClass("btn bg-info text-white text-centered").attr({type:"text", datacity: loc}).text(loc);
-    searchCardEl.append(searchCityButtonEl);
+    if (loadCityData()) {
+        var buttonDivEl = $("<div>").addClass("search-btns");
+        var searchArray = loadCityData();
+        buttonContainerEl.append(buttonDivEl);
 
+        for (i=0; i < searchArray.length; i++) {
+            var searchCityButtonEl = $("<button>").addClass("btn search-btn bg-info text-white text-centered col-12 mt-3").text(searchArray[i].loc);
+            buttonDivEl.append(searchCityButtonEl);
+        }
+    }
     return;
 };
 
@@ -175,7 +195,6 @@ var writeCityData = function (searchArray, lat, lon, loc) {
     return;
 };
    
-
 var loadCityData = function () {
     if (localStorage.getItem("search")) {
         var searchArray = JSON.parse(localStorage.getItem("search"));
@@ -185,15 +204,14 @@ var loadCityData = function () {
     }
 }
 
-// Get city/location on submit button click
-$(".submit-btn").on("click", function(){
-    var searchCity = $("#city-input").val().trim();
-    fetchLocationData(searchCity);
-});
+$("#submit-btn").on("click", function (){
+    console.log("clicked submit button");
+    fetchLocationData($("#city-input").val().trim());
+})
 
-$(".search-btn").on("click", function(event) {
-    var searchBtnCity = event.target.attr("datacity").val().trim();
-    fetchLocationData(searchBtnCity);
+$(".button-container").on("click", function(event) {
+    console.log("A search button was clicked");
+    fetchLocationData(event.target.value);
 });
 
 fetchLocationData();
