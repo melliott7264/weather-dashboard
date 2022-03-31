@@ -25,9 +25,22 @@ var fetchWeatherData = function(lat, lon, loc, units) {
 // function to get location data for city entered in search box
 var fetchLocationData = function(location) {
 
+    if (!location) {
+        var searchArray = [];
+        var locationObj = {};
+        if (loadCityData()){
+            searchArray = loadCityData();
+            var lastSearchIndex = searchArray.length-1;
+            location = searchArray[lastSearchIndex].loc;
+        }    
+    }
+
+    console.log(location);
+
     var apiKey =  "f3daf114f7ab984d1e977c7fa53afcf7";
     var locationUrl = "http://api.positionstack.com/v1/forward?access_key=" + apiKey + "&query=" + location + "&output=json";
 
+    console.log(locationUrl);
 
     fetch(locationUrl).then(function(response){
         // request was successful
@@ -49,6 +62,7 @@ var fetchLocationData = function(location) {
         }
     })
     .catch(function(error){
+        console.log(error);
         // notice this .catch() is getting chained on the end of the .then() method
         alert("Unable to connect to positionstack");
     });
@@ -56,38 +70,66 @@ var fetchLocationData = function(location) {
 };
 
 var displayWeatherData = function (loc, data) {
-var currentWeatherCardEl = $(".current-weather");
-var forecastWeatherCardEL = $(".forecast-weather");
+
+var currentWeatherEl = $(".current-weather");
 
 // Start Clear Page
-// if ($(".current-weather-card")) {
-//     $(".current-weather-card").remove();
-// }
-// if ($(".forecast-card-1")) {
-//     $(".forecast-card-1").remove();
-//     $(".forecast-card-2").remove();
-//     $(".forecast-card-3").remove();
-//     $(".forecast-card-4").remove();
-//     $(".forecast-card-5").remove();
-// }
+if ($(".current-weather-card")) {
+    $(".current-weather-card").remove();
+}
+if ($(".forecast-header")) {
+    $(".forecast-header").remove();
+}
+if ($(".forecast-weather")) {
+    $(".forecast-weather").remove();
+}
 // End Clear Page
 
 // Build Current Weather Card
-    console.log(loc);
-    console.log(dayjs(new Date()).format("MM/DD/YYYY"));
-    console.log(data.current.weather[0].icon);
-    console.log("Current Temp: " + data.current.temp);
-    console.log("Current Humidity: " + data.current.humidity);
-    console.log("Wind speed: " + data.current.wind_speed);
-    console.log("Current UVI: " + data.current.uvi);
-    console.log("Sunrise " + dayjs(new Date(data.current.sunrise*1000)).format("hh:mm A"));
+var currentWeatherCardEl = $("<div>").addClass("card current-weather-card");
+currentWeatherEl.append(currentWeatherCardEl);
+
+var currentWeatherHeaderEl = $("<h3>").addClass("card-header city-info text-center").text("Current Conditions ( " + dayjs(new Date()).format("MM/DD/YYYY") + " ) " + loc);
+var currentWeatherIconEl = $("<img>").addClass("current-weather-icon").attr("src", "http://openweathermap.org/img/w/" + data.current.weather[0].icon + ".png");
+var currentWeatherTempEl = $("<p>").addClass("current-weather-data").text("Temperature: " + parseInt(data.current.temp) + " F" );
+var currentWeatherWindEl = $("<p>").addClass("current-weather-data").text("Wind Speed: " + parseInt(data.current.wind_speed) + " MPH" );
+var currentWeatherHumidityEl = $("<p>").addClass("current-weather-data").text("Humidity: " + data.current.humidity + " %" );
+var currentWeatherUviEl = $("<p>").addClass("current-weather-data").text("UV Index: " + data.current.uvi);
+
+currentWeatherCardEl.append(currentWeatherHeaderEl, currentWeatherIconEl, currentWeatherTempEl, currentWeatherWindEl, currentWeatherHumidityEl, currentWeatherUviEl);
+
+var forecastWeatherHeaderEl = $("<h3>").addClass("card-header forecast-header col-12 col-xl-12 bg-info text-white").text("5 Day Forecast for " + loc);
+var forecastWeatherCardEl = $("<div>").addClass("card row flex-row justify-content-around forecast-weather");
+currentWeatherEl.append(forecastWeatherHeaderEl, forecastWeatherCardEl);
+
+// Build Forecast Weather Cards
     for (i=0; i<5; i++){
-        console.log(dayjs(new Date(data.daily[i].dt*1000)).format("MM/DD/YYYY"));
-        console.log(data.daily[i].weather[0].icon);
-        console.log("Daytime Temp: " + data.daily[i].temp.day);
-        console.log("Wind speed: " + data.daily[i].wind_speed);
-        console.log("Humidity: " + data.daily[i].humidity);
+        var forecastWeatherDayEl = $("<div>").addClass("card forecast-card-day col-12 col-xl-2");
+        forecastWeatherCardEl.append(forecastWeatherDayEl);
+
+        var forecastWeatherDayHeaderEl = $("<h4>").addClass("card-header text-center").text(dayjs(new Date(data.daily[i].dt*1000)).format("MM/DD/YY"));
+        var forecastWeatherDayImgEl = $("<img>").addClass("forecast-weather-icon").attr("src", "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png");
+        var forecastWeatherDayHiTempEl = $("<p>").addClass("forecast-weather-data").text("Hi: " + parseInt(data.daily[i].temp.max) + " F" );
+        var forecastWeatherDayLoTempEl = $("<p>").addClass("forecast-weather-data").text("Lo: " + parseInt(data.daily[i].temp.min) + " F" );
+        var forecastWeatherDayWindEl = $("<p>").addClass("forecast-weather-data").text("Wind: " + parseInt(data.daily[i].wind_speed) + " MPH" );
+        var forecastWeatherDayHumidityEl = $("<p>").addClass("forecast-weather-data").text("Humidity: " + data.daily[i].humidity + " %" );
+        var forecastWeatherDayUviEl = $("<p>").addClass("forecast-weather-data").text("UVI: " + data.daily[i].uvi);
+        var forecastWeatherDaySunriseEl = $("<p>").addClass("forecast-weather-data").text("Sunrise: " + dayjs(new Date(data.daily[i].sunrise*1000)).format("h:mm A"));
+        var forecastWeatherDaySunsetEl = $("<p>").addClass("forecast-weather-data").text("Sunset: " + dayjs(new Date(data.daily[i].sunset*1000)).format("h:mm A"));
+
+        forecastWeatherDayEl.append(forecastWeatherDayHeaderEl, forecastWeatherDayImgEl, forecastWeatherDayHiTempEl, forecastWeatherDayLoTempEl, forecastWeatherDayWindEl, forecastWeatherDayHumidityEl, forecastWeatherDayUviEl, forecastWeatherDaySunriseEl, forecastWeatherDaySunsetEl);
     }
+};
+
+var addSearchButtons = function () {
+
+    // add city search button
+    var searchCardEl = $("div.card");
+
+    var searchCityButtonEl = $("<button>").addClass("btn bg-info text-white text-centered").attr({type:"text", datacity: loc}).text(loc);
+    searchCardEl.append(searchCityButtonEl);
+
+    return;
 };
 
 // function to save searched locations to localStorage
@@ -104,22 +146,32 @@ var saveCityData = function(lat, lon, loc) {
                 var searchFlag = true;
             }
         }
-        // if the current location is not in the saved data, add it.
+        // check if current location is in saved data
         if (searchFlag) {
-            return;
+            return;  // if the current location is in saved date, return.
+        } else { // if the current location is not in the saved data, add it.
+            writeCityData(searchArray, lat, lon, loc);
         }
 
     } else {
         // A saved search data file did not exist,  save one.
-        var tempArray = [];
-        var tempLocationObj = {
-            lat: lat,
-            lon: lon,
-            loc: loc
-        }
-        tempArray.push(tempLocationObj);
-        localStorage.setItem("search", JSON.stringify(tempArray));
-    }           
+        writeCityData(searchArray, lat, lon, loc);
+    }     
+    return;
+};
+
+var writeCityData = function (searchArray, lat, lon, loc) {
+    var tempLocationObj = {
+        lat: lat,
+        lon: lon,
+        loc: loc
+    }
+    if (!searchArray) {
+        searchArray = []; // initialize a false searchArray
+    }
+    searchArray.push(tempLocationObj);
+    localStorage.setItem("search", JSON.stringify(searchArray));
+ 
     return;
 };
    
@@ -133,6 +185,15 @@ var loadCityData = function () {
     }
 }
 
-fetchLocationData("Mechanicsville,VA");
+// Get city/location on submit button click
+$(".submit-btn").on("click", function(){
+    var searchCity = $("#city-input").val().trim();
+    fetchLocationData(searchCity);
+});
 
+$(".search-btn").on("click", function(event) {
+    var searchBtnCity = event.target.attr("datacity").val().trim();
+    fetchLocationData(searchBtnCity);
+});
 
+fetchLocationData();

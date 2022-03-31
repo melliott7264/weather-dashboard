@@ -18,72 +18,15 @@
             <div class="card">
                 <h3 class="card-header text-center">Search for a City</h3>
                 <form id="city-search" class ="card-body row">
-                    <input name="city-input" id="city-input" type="text" autofocus="true" class="form-input col-12 p-1" value="Search City"/>
-                    <button type="submit" class="btn bg-info text-white col-12 mt-3">Submit</button>
+                    <input name="city-input" id="city-input" type="text" autofocus="true" class="form-input col-12 p-1" />
+                    <button type="submit" class="btn submit-btn bg-info text-white col-12 mt-3">Submit</button>
                 </form>
-                <button type="text" class="btn bg-info text-white" data-city="city1">City1</button>
+        
             </div>
         </div>
-        <div class="col-12 col-xl-9 current-weather">
-            <div class="card current-weather-card">
-                <h3 class="card-header city-info" >City (03/30/2022)</h3>
-                <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
-                <p class="current-weather-data" id="current-temp">Current Temp</p>
-                <p class="current-weather-data" id="current-wind">Current Wind Speed</p>
-                <p class="current-weather-data" id="current-humitiy">Current Humidity</p>
-                <p class="current-weather-data" id="current-uvi">Current UVI</p>
-                <p class="current-weather-data" id="current-sunrise">Current Sunrise</p>
-                <p class="current-weather-data" id="current-sunset">Current Sunset</p>
+            <div class="col-12 col-xl-9 current-weather">
+                
             </div>
-            <h3 class="card-header">5 Day Forecast</h3>
-            <div class="card row flex-row justify-content-around forecast-weather">
-                <div class="card forecast-card-1 col-12 col-xl-2">
-                    <h4 class="card-header text-center">Date</h4>
-                    <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
-                    <p class="forecast-weather-data" id="forecast-day-temp-1">Forecast Daytime Temp</p>
-                    <p class="forecast-weather-data" id="forecast-wind-1">Forecast Wind Speed</p>
-                    <p class="forecast-weather-data" id="forecast-humitiy-1">Forecast Humidity</p> 
-                    <p class="forecast-weather-data" id="forecast-sunrise-1">Forecast Sunrise</p> 
-                    <p class="forecast-weather-data" id="forecast-sunset-1">Forecast Sunset</p> 
-                </div>
-                <div class="card forecast-card-2 col-12 col-xl-2">
-                    <h4 class="card-header text-center">Date</h4>
-                    <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
-                    <p class="forecast-weather-data" id="forecast-day-temp-2">Forecast Daytime Temp</p>
-                    <p class="forecast-weather-data" id="forecast-wind-2">Forecast Wind Speed</p>
-                    <p class="forecast-weather-data" id="forecast-humitiy-2">Forecast Humidity</p> 
-                    <p class="forecast-weather-data" id="forecast-sunrise-2">Forecast Sunrise</p> 
-                    <p class="forecast-weather-data" id="forecast-sunset-2">Forecast Sunset</p> 
-                </div>
-                <div class="card forecast-card-3 col-12 col-xl-2">
-                    <h4 class="card-header text-center">Date</h4>
-                    <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
-                    <p class="forecast-weather-data" id="forecast-day-temp-3">Forecast Daytime Temp</p>
-                    <p class="forecast-weather-data" id="forecast-wind-3">Forecast Wind Speed</p>
-                    <p class="forecast-weather-data" id="forecast-humitiy-3">Forecast Humidity</p> 
-                    <p class="forecast-weather-data" id="forecast-sunrise-3">Forecast Sunrise</p> 
-                    <p class="forecast-weather-data" id="forecast-sunset-3">Forecast Sunset</p> 
-                </div>
-                <div class="card forecast-card-4 col-12 col-xl-2">
-                    <h4 class="card-header text-center">Date</h4>
-                    <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
-                    <p class="forecast-weather-data" id="forecast-day-temp-4">Forecast Daytime Temp</p>
-                    <p class="forecast-weather-data" id="forecast-wind-4">Forecast Wind Speed</p>
-                    <p class="forecast-weather-data" id="forecast-humitiy-4">Forecast Humidity</p> 
-                    <p class="forecast-weather-data" id="forecast-sunrise-4">Forecast Sunrise</p> 
-                    <p class="forecast-weather-data" id="forecast-sunset-4">Forecast Sunset</p> 
-                </div>
-                <div class="card forecast-card-5 col-12 col-xl-2">
-                    <h4 class="card-header text-center">Date</h4>
-                    <img class="current-weather-icon" id="current-icon" src="http://openweathermap.org/img/w/03d.png">
-                    <p class="forecast-weather-data" id="forecast-day-temp-5">Forecast Daytime Temp</p>
-                    <p class="forecast-weather-data" id="forecast-wind-5">Forecast Wind Speed</p>
-                    <p class="forecast-weather-data" id="forecast-humitiy-5">Forecast Humidity</p> 
-                    <p class="forecast-weather-data" id="forecast-sunrise-5">Forecast Sunrise</p> 
-                    <p class="forecast-weather-data" id="forecast-sunset-5">Forecast Sunset</p> 
-                </div>
-            </div>
-        </div>
     </main>  
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -92,7 +35,6 @@
 <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 <script src="https://unpkg.com/dayjs@1.8.21/plugin/utc.js"></script>
 <script>dayjs.extend(window.dayjs_plugin_utc)</script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script> -->
 <script src="./assets/js/script.js"></script> 
 </body>
 </html>
