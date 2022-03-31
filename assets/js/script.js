@@ -56,6 +56,23 @@ var fetchLocationData = function(location) {
 };
 
 var displayWeatherData = function (loc, data) {
+var currentWeatherCardEl = $(".current-weather");
+var forecastWeatherCardEL = $(".forecast-weather");
+
+// Start Clear Page
+// if ($(".current-weather-card")) {
+//     $(".current-weather-card").remove();
+// }
+// if ($(".forecast-card-1")) {
+//     $(".forecast-card-1").remove();
+//     $(".forecast-card-2").remove();
+//     $(".forecast-card-3").remove();
+//     $(".forecast-card-4").remove();
+//     $(".forecast-card-5").remove();
+// }
+// End Clear Page
+
+// Build Current Weather Card
     console.log(loc);
     console.log(dayjs(new Date()).format("MM/DD/YYYY"));
     console.log(data.current.weather[0].icon);
