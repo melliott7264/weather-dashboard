@@ -10,6 +10,8 @@ var fetchWeatherData = function(lat, lon, loc, units) {
         if (response.ok) {
             response.json().then(function(data){
 
+            console.log(data);
+
             displayWeatherData(loc, data);
         });
         }  else {
@@ -106,7 +108,15 @@ var currentWeatherIconEl = $("<img>").addClass("current-weather-icon").attr("src
 var currentWeatherTempEl = $("<p>").addClass("current-weather-data").text("Temperature: " + Math.round(data.current.temp) + " F" );
 var currentWeatherWindEl = $("<p>").addClass("current-weather-data").text("Wind Speed: " + Math.round(data.current.wind_speed) + " MPH" );
 var currentWeatherHumidityEl = $("<p>").addClass("current-weather-data").text("Humidity: " + data.current.humidity + " %" );
-var currentWeatherUviEl = $("<p>").addClass("current-weather-data").text("UV Index: " + data.current.uvi);
+
+// Need to check UVI levels and set a status color; good, warning, danger
+if (data.current.uvi <= 2) {
+    var currentWeatherUviEl = $("<p>").addClass("current-weather-data uvi bg-success text-white").text("UV Index: " + data.current.uvi);
+} else if (data.current.uvi >2 && data.current.uvi <6) {
+    var currentWeatherUviEl = $("<p>").addClass("current-weather-data uvi bg-warning text-black").text("UV Index: " + data.current.uvi);
+} else {
+    var currentWeatherUviEl = $("<p>").addClass("current-weather-data uvi bg-danger text-white").text("UV Index: " + data.current.uvi);
+}
 
 currentWeatherCardEl.append(currentWeatherHeaderEl, currentWeatherIconEl, currentWeatherTempEl, currentWeatherWindEl, currentWeatherHumidityEl, currentWeatherUviEl);
 

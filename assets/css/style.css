@@ -1,6 +1,63 @@
 * {
     font-family: 'Roboto', sans-serif;
 }
+
+h3 {
+    font-weight: 900px;
+} 
+
+h4 {
+    font-weight: 700;
+}
+
 .current-weather-icon, .forecast-weather-icon {
-    width: 100px;
+    width: 150px;
+    margin: 0 auto;
+}
+
+.current-weather-data, .forecast-weather-data {
+    font-size:20px;
+    font-weight: 700;
+    padding: 0px 0px 0px 20px;
+}
+
+.uvi {
+    width: 150px;
+    border-radius: 5px;
+}
+
+@media screen and (min-width: 1200px) {
+
+    .forecast-weather-icon {
+        width: 100px;
+    }
+
+    h4 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .forecast-weather-data {
+        font-size:16px;
+        font-weight: 500;
+        padding: 0px;
+    }
+    
+}
+@media screen and (min-width: 1400px) {
+
+    .current-weather-data {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .forecast-weather-data {
+        font-size: 18px;
+        font-weight: 700;
+    }
+    
+    .uvi {
+        width: 200px;
+        border-radius: 10px;
+    }
 }
