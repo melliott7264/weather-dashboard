@@ -9,16 +9,16 @@ var fetchWeatherData = function(lat, lon, loc, units) {
         // request was successful
         if (response.ok) {
             response.json().then(function(data){
-            console.log(data);
+
             displayWeatherData(loc, data);
         });
         }  else {
-            alert("Error: OpenWeather User Not Found");
+            alert("Error: OpenWeather User Not Found  " + response.status);
         }
     })
     .catch(function(error){
         // notice this .catch() is getting chained on the end of the .then() method
-        alert("Unable to connect to OpenWeather");
+        alert("Unable to connect to OpenWeather  " + error);
     });
 };
 
@@ -41,23 +41,18 @@ var fetchLocationData = function(location) {
 
     }
 
-    console.log("Passed location " + location);
-
     var apiKey =  "f3daf114f7ab984d1e977c7fa53afcf7";
     var locationUrl = "http://api.positionstack.com/v1/forward?access_key=" + apiKey + "&query=" + location + "&output=json";
-
-    console.log("location URL " + locationUrl);
 
     fetch(locationUrl).then(function(response){
         // request was successful
         if (response.ok) {
             response.json().then(function(data){
-            console.log(data);
+
             var lat =data.data[0].latitude;
             var lon =data.data[0].longitude;
-            // var loc = data.data[0].name;
             var loc = location;
-
+       
             // save city location data
             saveCityData(lat, lon, loc);
 
@@ -65,13 +60,12 @@ var fetchLocationData = function(location) {
             fetchWeatherData(lat, lon, loc, "imperial");
         });
         }  else {
-            alert("Error: positionstack User Not Found");
+            alert("Error: positionstack User Not Found  " + response.status);
         }
     })
     .catch(function(error){
-        console.log(error);
         // notice this .catch() is getting chained on the end of the .then() method
-        alert("Unable to connect to positionstack");
+        alert("Unable to connect to positionstack  " + error);
     });
     
 };
@@ -81,15 +75,19 @@ var displayWeatherData = function (loc, data) {
 var currentWeatherEl = $(".current-weather");
 
 // Start Clear Page
+// clear the search buttons by removing the <div> containing them
 if ($(".search-btns")) {
     $(".search-btns").remove();
 }
+// clear the current weather card
 if ($(".current-weather-card")) {
     $(".current-weather-card").remove();
 }
+// clear the 5 day forecast header
 if ($(".forecast-header")) {
     $(".forecast-header").remove();
 }
+// clear the 5 day forecast cards by removing the <div> containing them
 if ($(".forecast-weather")) {
     $(".forecast-weather").remove();
 }
@@ -102,15 +100,17 @@ addSearchButtons();
 var currentWeatherCardEl = $("<div>").addClass("card current-weather-card");
 currentWeatherEl.append(currentWeatherCardEl);
 
+// This is all the current weather data
 var currentWeatherHeaderEl = $("<h3>").addClass("card-header city-info text-center").text("Current Conditions ( " + dayjs(new Date()).format("MM/DD/YYYY") + " ) " + loc);
 var currentWeatherIconEl = $("<img>").addClass("current-weather-icon").attr("src", "http://openweathermap.org/img/w/" + data.current.weather[0].icon + ".png");
-var currentWeatherTempEl = $("<p>").addClass("current-weather-data").text("Temperature: " + parseInt(data.current.temp) + " F" );
-var currentWeatherWindEl = $("<p>").addClass("current-weather-data").text("Wind Speed: " + parseInt(data.current.wind_speed) + " MPH" );
+var currentWeatherTempEl = $("<p>").addClass("current-weather-data").text("Temperature: " + Math.round(data.current.temp) + " F" );
+var currentWeatherWindEl = $("<p>").addClass("current-weather-data").text("Wind Speed: " + Math.round(data.current.wind_speed) + " MPH" );
 var currentWeatherHumidityEl = $("<p>").addClass("current-weather-data").text("Humidity: " + data.current.humidity + " %" );
 var currentWeatherUviEl = $("<p>").addClass("current-weather-data").text("UV Index: " + data.current.uvi);
 
 currentWeatherCardEl.append(currentWeatherHeaderEl, currentWeatherIconEl, currentWeatherTempEl, currentWeatherWindEl, currentWeatherHumidityEl, currentWeatherUviEl);
 
+// These are the header and container for the 5 day forecast weather cards
 var forecastWeatherHeaderEl = $("<h3>").addClass("card-header forecast-header col-12 col-xl-12 bg-info text-white").text("5 Day Forecast for " + loc);
 var forecastWeatherCardEl = $("<div>").addClass("card row flex-row justify-content-around forecast-weather");
 currentWeatherEl.append(forecastWeatherHeaderEl, forecastWeatherCardEl);
@@ -120,11 +120,12 @@ currentWeatherEl.append(forecastWeatherHeaderEl, forecastWeatherCardEl);
         var forecastWeatherDayEl = $("<div>").addClass("card forecast-card-day col-12 col-xl-2");
         forecastWeatherCardEl.append(forecastWeatherDayEl);
 
+        // This is all the forecast data for each day
         var forecastWeatherDayHeaderEl = $("<h4>").addClass("card-header text-center").text(dayjs(new Date(data.daily[i].dt*1000)).format("MM/DD/YY"));
         var forecastWeatherDayImgEl = $("<img>").addClass("forecast-weather-icon").attr("src", "http://openweathermap.org/img/w/" + data.daily[i].weather[0].icon + ".png");
-        var forecastWeatherDayHiTempEl = $("<p>").addClass("forecast-weather-data").text("Hi: " + parseInt(data.daily[i].temp.max) + " F" );
-        var forecastWeatherDayLoTempEl = $("<p>").addClass("forecast-weather-data").text("Lo: " + parseInt(data.daily[i].temp.min) + " F" );
-        var forecastWeatherDayWindEl = $("<p>").addClass("forecast-weather-data").text("Wind: " + parseInt(data.daily[i].wind_speed) + " MPH" );
+        var forecastWeatherDayHiTempEl = $("<p>").addClass("forecast-weather-data").text("Hi: " + Math.round(data.daily[i].temp.max) + " F" );
+        var forecastWeatherDayLoTempEl = $("<p>").addClass("forecast-weather-data").text("Lo: " + Math.round(data.daily[i].temp.min) + " F" );
+        var forecastWeatherDayWindEl = $("<p>").addClass("forecast-weather-data").text("Wind: " + Math.round(data.daily[i].wind_speed) + " MPH" );
         var forecastWeatherDayHumidityEl = $("<p>").addClass("forecast-weather-data").text("Humidity: " + data.daily[i].humidity + " %" );
         var forecastWeatherDayUviEl = $("<p>").addClass("forecast-weather-data").text("UVI: " + data.daily[i].uvi);
         var forecastWeatherDaySunriseEl = $("<p>").addClass("forecast-weather-data").text("Sunrise: " + dayjs(new Date(data.daily[i].sunrise*1000)).format("h:mm A"));
@@ -180,6 +181,7 @@ var saveCityData = function(lat, lon, loc) {
     return;
 };
 
+// Routine to write location data to localStorage as an object in an array
 var writeCityData = function (searchArray, lat, lon, loc) {
     var tempLocationObj = {
         lat: lat,
@@ -194,7 +196,8 @@ var writeCityData = function (searchArray, lat, lon, loc) {
  
     return;
 };
-   
+
+// Load the search/city data from localStorage and pass it back to calling function as an array
 var loadCityData = function () {
     if (localStorage.getItem("search")) {
         var searchArray = JSON.parse(localStorage.getItem("search"));
@@ -202,16 +205,20 @@ var loadCityData = function () {
     } else {
         return false;
     }
-}
+};
 
-$("#submit-btn").on("submit", function (){
-    console.log("clicked submit button");
-    fetchLocationData($("#city-input").val().trim());
-})
-
-$(".button-container").on("click", function(event) {
-    console.log("A search button was clicked");
-    fetchLocationData(event.target.value);
+// Event handler for submit button/search box
+// wrote this in jquery first, but that did not work.  Was getting Typeerror - Failed to Fetch msgs
+var buttonEl = document.getElementById("submit-btn");
+buttonEl.addEventListener("click", function () {
+    searchCity = document.getElementById("city-input").value;
+    fetchLocationData(searchCity);
 });
 
+// Event handler for pre-programmed search buttons
+$(".button-container").on("click", function(event) {
+    fetchLocationData($(event.target).text());
+});
+
+// Call the location API which calls the weather API
 fetchLocationData();

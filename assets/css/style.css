@@ -1,4 +1,6 @@
-
+. {
+    font-family: 'Roboto', sans-serif;
+}
 .current-weather-icon, .forecast-weather-icon {
     width: 100px;
 }
