@@ -10,8 +10,6 @@ var fetchWeatherData = function(lat, lon, loc, units) {
         if (response.ok) {
             response.json().then(function(data){
 
-            console.log(data);
-
             displayWeatherData(loc, data);
         });
         }  else {
