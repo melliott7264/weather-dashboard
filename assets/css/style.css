@@ -1,3 +1,4 @@
+/* Styling is responsive for mobile devices first */
 * {
     font-family: 'Roboto', sans-serif;
 }
@@ -26,6 +27,7 @@ h4 {
     border-radius: 5px;
 }
 
+/* Transition from 1 column to 5 columns for forecast data - needed to downsize some */
 @media screen and (min-width: 1200px) {
 
     .forecast-weather-icon {
@@ -44,6 +46,7 @@ h4 {
     }
     
 }
+
 @media screen and (min-width: 1400px) {
 
     .current-weather-data {
