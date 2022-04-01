@@ -11,11 +11,11 @@ An applicaton to get the weather forecast for multiple cities in an easily under
 
 ## Installation
 
-There is no installation required.   Just run the applicaton from GitHub: https://github.com/melliott7264/weather-dashboard/.   City search results are saved to local strorage and you may want to delete that file from time to time.  That can be done from Developer Tools under the Application tab under Local Storage file://.  It should also be erased if you clear all the browser data.
+There is no installation required.   Just run the applicaton from GitHub: https://melliott7264.github.io/weather-dashboard/.   City search results are saved to local strorage and you may want to delete that file from time to time.  That can be done from Developer Tools under the Application tab under Local Storage file://.  It should also be erased if you clear all the browser data.
 
 ## Usage
 
-Load and run the applicaton from https://github.com/melliott7264/weather-dashboard/.   On initial load,  the weather data for Mechanicsville,VA is displayed.  You can display the weather for any other city by typing the city and state (City,ST) in the search box and clicking on the Submit button.  The weather data for that location will be displayed and the location information saved to local storage and a search button created.  From there on, you can get that city's data by clicking on its search button.  By default,  each time you load/reload the application it will display the weather data for the last search button created.  
+Load and run the applicaton from https://melliott7264.github.io/weather-dashboard/.   On initial load,  the weather data for Mechanicsville,VA is displayed.  You can display the weather for any other city by typing the city and state (City,ST) in the search box and clicking on the Submit button.  The weather data for that location will be displayed and the location information saved to local storage and a search button created.  From there on, you can get that city's data by clicking on its search button.  By default,  each time you load/reload the application it will display the weather data for the last search button created.  
 
 
 ![Weather Dashboard screenshot](./assets/images/ScreenShot.png)
