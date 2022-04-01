@@ -3,7 +3,7 @@
 var fetchWeatherData = function(lat, lon, loc, units) {
 
     var apiKey = "12afd4d18f110d35ce3359c3e1919c84";
-    var forecastUrl = "http://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=" + units + "&appid=" + apiKey;
+    var forecastUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=" + units + "&appid=" + apiKey;
 
     fetch(forecastUrl).then(function(response){
         // request was successful
@@ -42,7 +42,7 @@ var fetchLocationData = function(location) {
     }
 
     var apiKey =  "f3daf114f7ab984d1e977c7fa53afcf7";
-    var locationUrl = "http://api.positionstack.com/v1/forward?access_key=" + apiKey + "&query=" + location + "&output=json";
+    var locationUrl = "https://api.positionstack.com/v1/forward?access_key=" + apiKey + "&query=" + location + "&output=json";
 
     fetch(locationUrl).then(function(response){
         // request was successful
